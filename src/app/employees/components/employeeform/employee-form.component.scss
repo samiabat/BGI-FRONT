@@ -1,0 +1,14 @@
+.activity-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 16px;
+}
+
+.performance-indicator {
+  grid-column: span 2;
+}
+
+.performance-indicator-form {
+  display: grid;
+  column-gap: 16px;
+}

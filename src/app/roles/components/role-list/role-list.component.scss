@@ -1,0 +1,16 @@
+:host {
+    display: grid;
+    row-gap: 16px;
+    padding: 16px;
+}
+
+.add-btn {
+    height: fit-content;
+    width: fit-content;
+    align-self: center;
+    justify-self: end;
+}
+
+.grid {
+    width: 100%;
+}

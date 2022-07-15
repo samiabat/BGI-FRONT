@@ -1,0 +1,28 @@
+<mat-dialog-content>
+  <form class="stat-form" [formGroup]="statForm">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input id="name" formControlName="description" placeholder="Name" type="text" matInput />
+      <mat-error *ngIf="statForm.get('description')?.hasError('required')">
+        Please enter description
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <input id="description" formControlName="description" placeholder="description" type="text" matInput />
+      <mat-error *ngIf="statForm.get('description')?.hasError('required')">
+        Please enter description
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button class="submit" mat-flat-button color="primary" (click)="save()" [mat-dialog-close]
+    [disabled]="!statForm.valid">
+    Save
+  </button>
+  <button class="submit" mat-flat-button color="accent" [mat-dialog-close]>
+    Cancel
+  </button>
+</mat-dialog-actions>

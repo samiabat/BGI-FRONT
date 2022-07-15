@@ -1,0 +1,15 @@
+<button
+  class="add-btn"
+  mat-raised-button
+  color="primary"
+  (click)="addSector()"
+>
+  Add New Sector
+</button>
+<angular-slickgrid
+  gridId="officeGrid"
+  [columnDefinitions]="columnDefinitions"
+  [gridOptions]="gridOptions"
+  [dataset]="dataset"
+>
+</angular-slickgrid>

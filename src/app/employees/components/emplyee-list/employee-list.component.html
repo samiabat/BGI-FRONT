@@ -1,0 +1,15 @@
+<button
+  class="add-btn"
+  mat-raised-button
+  color="primary"
+  (click)="addEmployee()"
+>
+  Add New Emplyee
+</button>
+<angular-slickgrid
+  gridId="activityGrid"
+  [columnDefinitions]="columnDefinitions"
+  [gridOptions]="gridOptions"
+  [dataset]="dataset"
+>
+</angular-slickgrid>
