@@ -10,8 +10,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavigationComponent } from './navigation.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
-import { ThemeSwitchComponent } from '../theme-switch/theme-switch.component';
-import { ThemeSwitchModule } from '../theme-switch/theme-switch.module';
 
 describe('NavigationComponent', () => {
   let component: NavigationComponent;
@@ -19,7 +17,7 @@ describe('NavigationComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [NavigationComponent, ThemeSwitchComponent],
+      declarations: [NavigationComponent],
       imports: [
         NoopAnimationsModule,
         LayoutModule,
@@ -29,7 +27,6 @@ describe('NavigationComponent', () => {
         MatSidenavModule,
         MatToolbarModule,
         RouterTestingModule,
-        ThemeSwitchModule,
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();

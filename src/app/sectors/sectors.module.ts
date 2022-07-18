@@ -7,14 +7,14 @@ import { NgxsModule } from '@ngxs/store';
 import { AngularSlickgridModule } from 'angular-slickgrid';
 import { ConfirmDeleteModule } from '../confirm-delete/confirm-delete.module';
 import { SharedModules } from '../shared-modules.module';
-import { ObjectivesRoutingModule } from './sectors-routing.module';
+import { SectorsRoutingModule } from './sectors-routing.module';
 import { OfficesModule } from '../offices/offices.module';
 import { RolesModule } from '../roles/roles.module';
 
 @NgModule({
   declarations: [SectorListComponent, SectorFormComponent],
   imports: [
-    ObjectivesRoutingModule,
+    SectorsRoutingModule,
     SharedModules,
     NgxsModule.forFeature([SectorState]),
     AngularSlickgridModule,

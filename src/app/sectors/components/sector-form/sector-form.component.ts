@@ -28,7 +28,7 @@ export class SectorFormComponent implements OnInit {
     this.update = this.data.update;
     this.sectorForm = this.fb.group({
       description: ['', Validators.required],
-      goal: ['', Validators.required],
+      role: ['', Validators.required],
       owner: '',
     });
   }

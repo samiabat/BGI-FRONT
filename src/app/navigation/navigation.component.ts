@@ -43,7 +43,7 @@ export class NavigationComponent {
     { link: ROLES_ROUTE, label: 'Roles', icon: 'list' },
     { link: SECTORS_ROUTE, label: 'Sectors', icon: 'segment' },
     {
-      link: LOGOUT_ROUTE,
+      link: LOGIN_ROUTE,
       label: 'Logout',
       icon: 'logout',
     },
