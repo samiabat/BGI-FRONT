@@ -1,115 +1,97 @@
-import { Component, OnInit } from '@angular/core';
+import { RoleFacade } from 'src/app/roles/facades/role.facade';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Column, GridOption, Formatters, OnEventArgs } from 'angular-slickgrid';
+// import { Column, GridOption, Formatters, OnEventArgs } from 'angular-slickgrid';
 import { ConfirmDeleteDialogComponent } from 'src/app/confirm-delete/confirm-delete-dialog/confirm-delete-dialog.component';
 import { SectorFacade } from '../../facades/sector.facade';
 import { Sector } from '../../models/sector.model';
 import { SectorFormComponent } from '../sector-form/sector-form.component';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 
+export interface SectorData{
+  id: string;
+  name: string;
+  role: string;
+  deleted: boolean;
+  createdBy: string;
+  updatedBy: string;
+  deletedBy: string;
+}
+
+const FRUITS: string[] = [
+  'blueberry',
+  'lychee',
+  'kiwi',
+  'mango',
+  'peach',
+  'lime',
+  'pomegranate',
+  'pineapple',
+];
+const NAMES: string[] = [
+  'Maia',
+  'Asher',
+  'Olivia',
+  'Atticus',
+  'Amelia',
+  'Jack',
+  'Charlotte',
+  'Theodore',
+  'Isla',
+  'Oliver',
+  'Isabella',
+  'Jasper',
+  'Cora',
+  'Levi',
+  'Violet',
+  'Arthur',
+  'Mia',
+  'Thomas',
+  'Elizabeth',
+];
 @Component({
   selector: 'app-sector-list',
   templateUrl: './sector-list.component.html',
   styleUrls: ['./sector-list.component.scss'],
-  providers: [SectorFacade],
+  providers: [SectorFacade, RoleFacade],
 })
-export class SectorListComponent implements OnInit {
-  columnDefinitions: Column[] = [];
-  gridOptions!: GridOption;
-  dataset!: Sector[];
+export class SectorListComponent implements AfterViewInit {
+  d_Colums: string[] = ['id', 'name', 'role', 'deleted', 'createdBy', 'updatedBy', 'deletedBy'];
+  dSource!: MatTableDataSource<SectorData>;
 
-  constructor(
-    private sectorFacade: SectorFacade,
-    private matDialog: MatDialog
-  ) {
-    this.columnDefinitions = [
-      {
-        id: 'edit',
-        field: 'id',
-        excludeFromHeaderMenu: true,
-        formatter: Formatters.editIcon,
-        minWidth: 30,
-        maxWidth: 30,
-        onCellClick: (e: Event, args: OnEventArgs) => {
-          this.editSector(args.dataContext);
-        },
-      },
-      {
-        id: 'delete',
-        field: 'id',
-        excludeFromColumnPicker: true,
-        excludeFromGridMenu: true,
-        excludeFromHeaderMenu: true,
-        formatter: Formatters.deleteIcon,
-        minWidth: 30,
-        maxWidth: 30,
-        onCellClick: (e: Event, args: OnEventArgs) => {
-          this.deleteSector(args.dataContext);
-        },
-      },
-      {
-        id: 'name',
-        name: 'Name',
-        field: 'name',
-        sortable: true,
-      },
-      {
-        id: 'role',
-        name: 'Role',
-        field: 'role',
-        formatter: Formatters.complexObject,
-        sortable: true,
-      },
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
-      {
-        id: 'created',
-        name: 'Created By',
-        field: 'created',
-        sortable: true,
-      },
-
-      {
-        id: 'updated',
-        name: 'Updated By',
-        field: 'updated',
-        sortable: true,
-      },
-      {
-        id: 'created-date',
-        name: 'Created Date',
-        field: 'created-date',
-        formatter: Formatters.complexObject,
-        sortable: true,
-      },
-      {
-        id: 'updated-date',
-        name: 'Updated Date',
-        field: 'updated-date',
-        formatter: Formatters.complexObject,
-        sortable: true,
-      },
-    ];
-    this.gridOptions = {
-      enableAutoResize: true,
-      enableSorting: true,
-      enableGrouping: true,
-      // gridHeight: 225,
-      gridWidth: '100%',
-      enableCellNavigation: true,
-      enableRowSelection: true,
-      editable: false,
-      multiSelect: false,
-      rowSelectionOptions: {
-        selectActiveRow: true,
-      },
-      enableGridMenu: false,
-      enableHeaderMenu: false,
-      enableContextMenu: false,
-      enableCellMenu: false,
-    };
+  constructor(private sectorFacade: SectorFacade,
+    private matDialog: MatDialog) {
+    const sectors = Array.from({length: 100}, (_, k) => createNewSector(k + 1));
+    this.dSource = new MatTableDataSource(sectors);
   }
 
-  ngOnInit(): void {
-    this.sectorFacade.sectors$.subscribe((data) => (this.dataset = data));
+  ngAfterViewInit() {
+    this.dSource.paginator = this.paginator;
+    this.dSource.sort = this.sort;
+  }
+
+  
+
+  editStat(stat: Sector) {
+    this.sectorFacade.selectSector(stat);
+    this.matDialog.open(SectorFormComponent, {
+      data: { update: true },
+    });
+  }
+
+  deleteStat(stat: Sector) {
+    const dialogRef = this.matDialog.open(ConfirmDeleteDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (result && stat.id) {
+        this.sectorFacade.deleteSector(stat.id);
+      }
+    });
   }
 
   addSector() {
@@ -134,4 +116,30 @@ export class SectorListComponent implements OnInit {
       }
     });
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dSource.paginator) {
+      this.dSource.paginator.firstPage();
+    }
+  }
+}
+
+function createNewSector(id: number): SectorData {
+  const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] +
+    ' ' +
+    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) +
+    '.';
+
+  return {
+    id: id.toString(),
+    name: name,
+    role: name,
+    deleted: false,
+    createdBy: name,
+    updatedBy: name,
+    deletedBy: name,
+  };
 }

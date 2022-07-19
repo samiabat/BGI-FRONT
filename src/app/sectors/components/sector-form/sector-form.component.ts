@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { RoleFacade } from 'src/app/roles/facades/role.facade';
 import { Role } from 'src/app/roles/models/role.model';
 import { OfficeFacade } from 'src/app/offices/facades/office.facade';
 import { Office } from 'src/app/offices/models/office.model';
@@ -22,7 +21,6 @@ export class SectorFormComponent implements OnInit {
     public sectorFacade: SectorFacade,
     private fb: FormBuilder,
     public officeFacade: OfficeFacade,
-    public roleFacade: RoleFacade,
     @Inject(MAT_DIALOG_DATA) private data: { update: boolean }
   ) {
     this.update = this.data.update;
