@@ -1,5 +1,4 @@
 import { RoleService } from './../../../roles/services/role.service';
-import { GetRoleById } from './../../../roles/store/role.actions';
 import { SectorService } from './../../services/sector.service';
 import { RoleFacade } from 'src/app/roles/facades/role.facade';
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
@@ -13,6 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Role } from 'src/app/roles/models/role.model';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-sector-list',
@@ -24,24 +24,25 @@ export class SectorListComponent implements AfterViewInit {
   d_Colums: string[] = ['id', 'name', 'role', 'deleted', 'createdBy', 'updated_date', 'deletedBy', 'created_date', 'del', 'edit'];
   dSource!: MatTableDataSource<Sector>;
   role!: Role;
+  refreshed$ = true;
+  refreshSector$ = new BehaviorSubject<boolean>(true);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private sectorFacade: SectorFacade, private sectorService: SectorService,
     private matDialog: MatDialog, private roleService: RoleService,
-    private changeDetectorRefs: ChangeDetectorRef) {
+    private changeDetectorRefs: ChangeDetectorRef,) {
   }
 
   ngAfterViewInit() {
     this.refresh();
   }
 
-  public refresh() {
+  public refresh(refresh: boolean = false) {
     this.sectorService.getSectors().subscribe((data) => {
       this.dSource = new MatTableDataSource(data);
       this.dSource.paginator = this.paginator;
-      this.dSource.sort = this.sort;
       this.changeDetectorRefs.detectChanges();
     })
   }
@@ -53,7 +54,7 @@ export class SectorListComponent implements AfterViewInit {
     this.matDialog.open(SectorFormComponent, {
       data: { update: true },
     }).afterClosed().subscribe( responce => { 
-      this.refresh() });
+      this.refresh(true) });
   }
 
   deleteStat(stat: Sector) {
@@ -62,7 +63,7 @@ export class SectorListComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result && stat.id) {
         this.sectorFacade.deleteSector(stat.id);
-        this.refresh();
+        this.refresh(true);
       }
     });
   }
@@ -77,7 +78,7 @@ export class SectorListComponent implements AfterViewInit {
     this.matDialog.open(SectorFormComponent, {
       data: { update: false },
     }).afterClosed().subscribe( responce => { 
-      this.refresh() });
+      this.refresh(true) });
   }
 
   editSector(sector: Sector) {
@@ -85,7 +86,7 @@ export class SectorListComponent implements AfterViewInit {
     this.matDialog.open(SectorFormComponent, {
       data: { update: true },
     }).afterClosed().subscribe( _ => { 
-      this.refresh();
+      this.refresh(true);
     });
   }
 
@@ -95,7 +96,7 @@ export class SectorListComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result && sector.id) {
         this.sectorFacade.deleteSector(sector.id);
-        this.refresh();
+        this.refresh(true);
       }
     });
   }
