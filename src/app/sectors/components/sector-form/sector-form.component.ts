@@ -1,3 +1,5 @@
+import { SectorListComponent } from './../sector-list/sector-list.component';
+import { RoleFacade } from './../../../roles/facades/role.facade';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -7,11 +9,12 @@ import { Office } from 'src/app/offices/models/office.model';
 import { SectorFacade } from '../../facades/sector.facade';
 import { Sector } from '../../models/sector.model';
 
+
 @Component({
   selector: 'app-sector-form',
   templateUrl: './sector-form.component.html',
   styleUrls: ['./sector-form.component.scss'],
-  providers: [SectorFacade, OfficeFacade, OfficeFacade],
+  providers: [SectorFacade, RoleFacade, OfficeFacade, SectorListComponent],
 })
 export class SectorFormComponent implements OnInit {
   sectorForm: FormGroup;
@@ -19,15 +22,15 @@ export class SectorFormComponent implements OnInit {
   update: boolean = false;
   constructor(
     public sectorFacade: SectorFacade,
+    public sectorList: SectorListComponent,
+    public roleFacade: RoleFacade,
     private fb: FormBuilder,
-    public officeFacade: OfficeFacade,
     @Inject(MAT_DIALOG_DATA) private data: { update: boolean }
   ) {
     this.update = this.data.update;
     this.sectorForm = this.fb.group({
-      description: ['', Validators.required],
-      role: ['', Validators.required],
-      owner: '',
+      name: ['', Validators.required],
+      role: '',
     });
   }
 
@@ -45,13 +48,9 @@ export class SectorFormComponent implements OnInit {
     const { valid, touched, dirty } = this.sectorForm;
     if (valid && (touched || dirty)) {
       if (!this.update) {
-        let owner= this.sectorForm.get('owner')?.value
-          ? this.sectorForm.get('owner')?.value
-          : [];
-        console.log({ ...this.sectorForm.value, owner });
+        console.log({ ...this.sectorForm.value});
         this.sectorFacade.addSector({
           ...this.sectorForm.value,
-          owner,
         });
       }
 
@@ -62,19 +61,7 @@ export class SectorFormComponent implements OnInit {
       }
     }
   }
-  goalComparator(role1: Role, role2: Role) {
-    return (
-
-      role1.id === role2.id &&
-      role1.description === role2.description &&
-      role1.owner?.name == role2.owner?.name
-    );
-  }
-  officeComparator(office1: Office, office2: Office) {
-    return (
-      office1.id === office2.id &&
-      office1.name === office2.name &&
-      office1.location == office2.location
-    );
+  roleComparator(role1: Role, role2: Role) {
+    return role1?.id === role2?.id && role1?.name === role2?.name;
   }
 }

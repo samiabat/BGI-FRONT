@@ -3,8 +3,10 @@ import { Office } from 'src/app/offices/models/office.model';
 
 export interface Sector {
   id?: number;
-  description: string;
-  code?: string;
-  role: Role;
-  owner?: Office;
+  name: string;
+  role?: string;
+  deleted?: string;
+  created_by?: string;
+  updated_by?: string;
+  deleted_by?: string;
 }

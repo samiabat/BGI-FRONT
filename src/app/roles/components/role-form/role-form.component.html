@@ -3,18 +3,18 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
-      <input id="name" formControlName="description" placeholder="Name" type="text" matInput />
-      <mat-error *ngIf="statForm.get('description')?.hasError('required')">
-        Please enter description
+      <input id="name" formControlName="name" placeholder="Name" type="text" matInput />
+      <mat-error *ngIf="statForm.get('name')?.hasError('required')">
+        Please enter Name
       </mat-error>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Description</mat-label>
       <input id="description" formControlName="description" placeholder="description" type="text" matInput />
       <mat-error *ngIf="statForm.get('description')?.hasError('required')">
         Please enter description
       </mat-error>
-    </mat-form-field>
+    </mat-form-field> -->
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

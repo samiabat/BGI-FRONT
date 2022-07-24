@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { OfficeFacade } from 'src/app/offices/facades/office.facade';
-import { Office } from 'src/app/offices/models/office.model';
 import { RoleFacade } from '../../facades/role.facade';
 import { Role } from '../../models/role.model';
 
@@ -11,7 +9,7 @@ import { Role } from '../../models/role.model';
   templateUrl: './role-form.component.html',
   styleUrls: ['./role-form.component.scss'],
 
-  providers: [RoleFacade, OfficeFacade],
+  providers: [RoleFacade, RoleFacade],
 })
 export class RoleFormComponent implements OnInit {
   statForm: FormGroup;
@@ -22,13 +20,11 @@ export class RoleFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private roleFacade: RoleFacade,
-    public officeFacade: OfficeFacade,
     @Inject(MAT_DIALOG_DATA) private data: { update: boolean }
   ) {
     this.update = this.data.update;
     this.statForm = this.fb.group({
-      description: ['', Validators.required],
-      owner: '',
+      name: ['', Validators.required],
     });
   }
 
@@ -59,11 +55,11 @@ export class RoleFormComponent implements OnInit {
     }
   }
 
-  officeComparator(office1: Office, office2: Office) {
+  officeComparator(role1: Role, role2: Role) {
     return (
-      office1?.id === office2?.id &&
-      office1?.name === office2?.name &&
-      office1?.location == office2?.location
+      role1?.id === role2?.id &&
+      role1.name === role2.name &&
+      role1.description === role2.description
     );
   }
 }

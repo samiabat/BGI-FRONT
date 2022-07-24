@@ -1,3 +1,4 @@
+import { API_BASE_URL } from './../../constants/urls';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap } from 'rxjs';
@@ -8,7 +9,7 @@ import { Office } from '../models/office.model';
   providedIn: 'root',
 })
 export class OfficeService {
-  url = 'OFFICES_URL';
+  url = API_BASE_URL +'/roles/';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

@@ -2,41 +2,40 @@
   <form class="activity-form" [formGroup]="employeeForm">
     <mat-form-field appearance="outline">
       <mat-label>Full Name</mat-label>
-      <input id="name" formControlName="description" placeholder="name" matInput />
+      <input id="name" formControlName="name" placeholder="name" matInput />
+      <mat-error *ngIf="employeeForm.get('name')?.hasError('required')">
+        Please enter name
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Phone</mat-label>
-      <input id="phone" formControlName="description" placeholder="description" matInput />
+      <input id="phone" formControlName="phone" placeholder="phone" matInput />
+      <mat-error *ngIf="employeeForm.get('phone')?.hasError('required')">
+        Please enter phone
+      </mat-error>
     </mat-form-field>
     
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <mat-select
-        formControlName="owner"
-        [compareWith]="officeComparator"
-      >
-        <mat-option
-          *ngFor="let office of officeFacade.offices$ | async"
-          [value]="office"
-        >
-          {{ office.name }}
-        </mat-option>
-      </mat-select>
+      <input id="phone" formControlName="email" placeholder="email" matInput />
+      <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+        Please enter email
+      </mat-error>
     </mat-form-field>
     
     <mat-form-field appearance="outline">
       <mat-label>Sector</mat-label>
       <mat-select
-        formControlName="goal"
-        [compareWith]="goalComparator"
+        formControlName="sector"
+        [compareWith]="sectorComparator"
         (selectionChange)="onGoalSelectionChange($event)"
       >
         <mat-option
-          *ngFor="let goal of roleFacade.goals$ | async"
-          [value]="goal"
+          *ngFor="let sector of sectorFacade.sectors$ | async"
+          [value]="sector"
         >
-          {{ goal.description }}
+          {{ sector.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -88,12 +87,18 @@
         "
         class="grouping"
       >
-        <div class="performance-indicator-form" [formGroupName]="i">
+        <div class="employees-form" [formGroupName]="i">
           <mat-form-field appearance="outline">
             <mat-label>Role</mat-label>
-            <mat-select formControlName="unitOfMeasure">
-              <mat-option *ngFor="let unit of unitOfMeasures" [value]="unit">
-                {{ unit }}
+            <mat-select
+              formControlName="role"
+              [compareWith]="roleComparator"
+            >
+              <mat-option
+                *ngFor="let role of roleFacade.roles$ | async"
+                [value]="role.id"
+                >
+                {{ role.name }}
               </mat-option>
             </mat-select>
           </mat-form-field>

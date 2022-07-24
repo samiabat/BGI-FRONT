@@ -28,7 +28,7 @@ export class SectorService {
   }
 
   getSector(id: number): Observable<Sector> {
-    const url = `${this.url}/${id}`;
+    const url = `${this.url}${id}/`;
     return this.http.get<Sector>(url).pipe(
       tap((_) => console.log(`fetched sector id=${id}`)),
       catchError(
@@ -37,14 +37,14 @@ export class SectorService {
     );
   }
 
-  getSectorsByGoal(role: Role): Observable<Sector[]> {
+  getSectorsById(id: Number): Observable<Sector[]> {
     return this.http
-      .get<Sector[]>(`${this.url}?$filter=Goal/Id eq ${role.id}`)
+      .get<Sector[]>(`${this.url}?$filter=Goal/Id eq ${id}`)
       .pipe(
         tap((data) => console.log(`fetched ${data.length} objectives `)),
         catchError(
           BGIEIErrorHandler.handleError<Sector[]>(
-            `getObjectivesByGoal goal id=${role.id}`
+            `getObjectivesByGoal goal id=${id}`
           )
         )
       );
@@ -62,7 +62,7 @@ export class SectorService {
   }
 
   updateSector(id: number, sector: Sector): Observable<void> {
-    const url = `${this.url}/${id}`;
+    const url = `${this.url}${id}/`;
     return this.http.put<void>(url, sector, this.httpOptions).pipe(
       tap((_) => console.log(`updated sector with id=${id}`)),
       catchError(BGIEIErrorHandler.handleError<void>('updateSector'))
@@ -70,7 +70,7 @@ export class SectorService {
   }
 
   deleteSector(id: number): Observable<void> {
-    const url = `${this.url}/${id}`;
+    const url = `${this.url}${id}/`;
 
     return this.http.delete<void>(url, this.httpOptions).pipe(
       tap((_) => console.log(`deleted sector with id=${id}`)),

@@ -1,4 +1,4 @@
-import { GetSectors, GetSectorByGoal, CreateSector, UpdateSector, SelectSector, DeleteSector } from './sector.actions';
+import { GetSectors, GetSectorByGoal, CreateSector, UpdateSector, SelectSector, DeleteSector, GetSectorById } from './sector.actions';
 import { SectorService } from './../services/sector.service';
 import { Sector } from './../models/sector.model';
 import { Injectable } from '@angular/core';
@@ -50,13 +50,13 @@ export class SectorState implements NgxsAfterBootstrap {
     );
   }
 
-  @Action(GetSectorByGoal)
-  getSectorsByGoal(
+  @Action(GetSectorById)
+  getSectorsById(
     { patchState, setState }: StateContext<SectorStateModel>,
-    { role }: GetSectorByGoal
+    { id }: GetSectorById
   ) {
     patchState({ loading: true });
-    return this.sectorService.getSectorsByGoal(role).pipe(
+    return this.sectorService.getSectorsById(id).pipe(
       tap((sectors) =>
         setState({
           sectors: sectors,

@@ -13,7 +13,7 @@ import { Role } from '../models/role.model';
 @Injectable()
 export class RoleFacade {
   @Select(RoleSelector.Roles)
-  goals$!: Observable<Role[]>;
+  roles$!: Observable<Role[]>;
 
   @Select(RoleSelector.seletedRole)
   selectedRole$!: Observable<Role>;

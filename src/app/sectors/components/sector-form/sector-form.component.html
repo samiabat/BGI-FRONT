@@ -2,22 +2,22 @@
   <form class="office-form" [formGroup]="sectorForm">
     <mat-form-field appearance="outline">
       <mat-label>Name</mat-label>
-      <input id="description" formControlName="description" matInput placeholder=""/>
-      <mat-error *ngIf="sectorForm.get('description')?.hasError('required')">
+      <input id="name" formControlName="name" matInput placeholder=""/>
+      <mat-error *ngIf="sectorForm.get('name')?.hasError('required')">
         Please enter name
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Role</mat-label>
+      <mat-label>Select Role</mat-label>
       <mat-select
-        formControlName="owner"
-        [compareWith]="officeComparator"
+        formControlName="role"
+        [compareWith]="roleComparator"
       >
         <mat-option
-          *ngFor="let office of officeFacade.offices$ | async"
-          [value]="office"
+          *ngFor="let role of  roleFacade.roles$ | async "
+          [value]="role.id"
           >
-          {{ office.name }}
+          {{ role.name }} 
         </mat-option>
       </mat-select>
     </mat-form-field>

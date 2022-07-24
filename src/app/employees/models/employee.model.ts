@@ -5,8 +5,8 @@ import { PerformanceIndicator } from './performance-indicator.model';
 export interface Employee {
   id?: number;
   name: string;
-  role: Role;
-  owner: Office;
-  performanceIndicators: PerformanceIndicator[];
-  description: string;
+  role?: string[];
+  phone?: Office;
+  email?: string;
+  // description: string;
 }

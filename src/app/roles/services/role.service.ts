@@ -20,24 +20,24 @@ export class RoleService {
   getRoles(): Observable<Role[]> {
     return this.http.get<Role[]>(this.url).pipe(
       tap((data) => {}),
-      catchError(BGIEIErrorHandler.handleError<Role[]>('getGoals', []))
+      catchError(BGIEIErrorHandler.handleError<Role[]>('getRoles', []))
     );
   }
 
   getRole(id: number): Observable<Role> {
     const url = `${this.url}/${id}`;
     return this.http.get<Role>(url).pipe(
-      tap((_) => console.log(`fetched Goal id=${id}`)),
-      catchError(BGIEIErrorHandler.handleError<Role>(`getGoal id=${id}`))
+      tap((_) => console.log(`fetched Roles id=${id}`)),
+      catchError(BGIEIErrorHandler.handleError<Role>(`getRoles id=${id}`))
     );
   }
 
   addRole(stat: Role): Observable<Role> {
     return this.http.post<Role>(this.url, stat, this.httpOptions).pipe(
       tap((newStat: Role) =>
-        console.log(`Added new Goal with id: ${newStat.id}`)
+        console.log(`Added new Roles with id: ${newStat.id}`)
       ),
-      catchError(BGIEIErrorHandler.handleError<Role>('addGoal'))
+      catchError(BGIEIErrorHandler.handleError<Role>('addRolesl'))
     );
   }
 
@@ -45,8 +45,8 @@ export class RoleService {
     console.log(stat);
     const url = `${this.url}/${id}`;
     return this.http.put<void>(url, stat, this.httpOptions).pipe(
-      tap(() => console.log(`updated Goal with id=${id}`)),
-      catchError(BGIEIErrorHandler.handleError<void>('updateGoal'))
+      tap(() => console.log(`updated Roles with id=${id}`)),
+      catchError(BGIEIErrorHandler.handleError<void>('updateRoles'))
     );
   }
 
@@ -54,8 +54,8 @@ export class RoleService {
     const url = `${this.url}/${id}`;
 
     return this.http.delete<void>(url, this.httpOptions).pipe(
-      tap((_) => console.log(`deleted Goal with id=${id}`)),
-      catchError(BGIEIErrorHandler.handleError<void>('deleteGoal'))
+      tap((_) => console.log(`deleted Roles with id=${id}`)),
+      catchError(BGIEIErrorHandler.handleError<void>('deleteRoles'))
     );
   }
 }

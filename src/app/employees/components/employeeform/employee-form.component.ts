@@ -51,10 +51,11 @@ export class EmployeeFormComponent implements OnInit {
   ) {
     this.update = this.data.update;
     this.employeeForm = this.fb.group({
-      goal: ['', Validators.required],
+      name: ['', Validators.required],
+      phone: ['', Validators.required],
+      email:['', Validators.required],
       sector: ['', Validators.required],
-      owner:['', Validators.required],
-      description: ['', Validators.required],
+      role: ['', Validators.required],
       performanceIndicators: this.fb.array([
         this.fb.group({
           name: ['', Validators.required],
@@ -123,11 +124,11 @@ export class EmployeeFormComponent implements OnInit {
 
   sectorComparator(sector1: Sector, sector2: Sector) {
     return (
-      sector1?.id === sector2?.id && sector1?.code === sector2?.code
+      sector1?.id === sector2?.id && sector1?.name === sector2?.name
     );
   }
 
-  goalComparator(goal1: Role, goal2: Role) {
-    return goal1?.id === goal2?.id && goal1?.code === goal2?.code;
+  roleComparator(role1: Role, role2: Role) {
+    return role1?.id === role2?.id && role1?.name === role2?.name;
   }
 }
