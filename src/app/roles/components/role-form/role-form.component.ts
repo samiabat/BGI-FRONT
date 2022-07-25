@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { SectorFacade } from 'src/app/sectors/facades/sector.facade';
+import { Sector } from 'src/app/sectors/models/sector.model';
 import { RoleFacade } from '../../facades/role.facade';
 import { Role } from '../../models/role.model';
 
@@ -9,7 +11,7 @@ import { Role } from '../../models/role.model';
   templateUrl: './role-form.component.html',
   styleUrls: ['./role-form.component.scss'],
 
-  providers: [RoleFacade, RoleFacade],
+  providers: [SectorFacade,RoleFacade, RoleFacade],
 })
 export class RoleFormComponent implements OnInit {
   statForm: FormGroup;
@@ -20,11 +22,14 @@ export class RoleFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private roleFacade: RoleFacade,
+    public sectorFacade: SectorFacade,
     @Inject(MAT_DIALOG_DATA) private data: { update: boolean }
   ) {
     this.update = this.data.update;
     this.statForm = this.fb.group({
       name: ['', Validators.required],
+      description: '',
+      sector: ''
     });
   }
 
@@ -55,11 +60,7 @@ export class RoleFormComponent implements OnInit {
     }
   }
 
-  officeComparator(role1: Role, role2: Role) {
-    return (
-      role1?.id === role2?.id &&
-      role1.name === role2.name &&
-      role1.description === role2.description
-    );
+  sectorComparator(sector1: Sector, sector2: Sector) {
+    return sector1?.id === sector2?.id && sector1?.name === sector2?.name;
   }
 }

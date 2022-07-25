@@ -30,9 +30,9 @@
       <td mat-cell *matCellDef="let row"> role  </td>
     </ng-container>
     
-    <ng-container matColumnDef="deleted">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Deleted </th>
-      <td mat-cell *matCellDef="let row"> {{row.deleted}} </td>
+    <ng-container matColumnDef="active">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let row"> {{row.active}} </td>
     </ng-container>
     
 
@@ -52,6 +52,18 @@
     <ng-container matColumnDef="created_date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
       <td mat-cell *matCellDef="let row"> {{row.created_date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="det">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+      <td mat-cell *matCellDef="let row"><button
+        class="edit-btn"
+        mat-raised-button
+        color="grey"
+        (click)="editSector(row)"
+      >
+        View
+      </button></td>
     </ng-container>
 
     <ng-container matColumnDef="del">

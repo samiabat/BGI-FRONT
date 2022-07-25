@@ -6,8 +6,6 @@ import { MatSelectChange } from '@angular/material/select';
 import { RoleFacade } from 'src/app/roles/facades/role.facade';
 import { Role } from 'src/app/roles/models/role.model';
 import { Sector } from 'src/app/sectors/models/sector.model';
-import { OfficeFacade } from 'src/app/offices/facades/office.facade';
-import { Office } from 'src/app/offices/models/office.model';
 import { UnitOfMeasure } from '../../models/performance-indicator.model';
 import { Employee } from '../../models/employee.model';
 import { EmployeeFacade } from '../../facades/employee.facade';
@@ -21,7 +19,7 @@ interface Choise {
   selector: 'app-employee-form',
   templateUrl: './employee-form.component.html',
   styleUrls: ['./employee-form.component.scss'],
-  providers: [EmployeeFacade, OfficeFacade, SectorFacade, RoleFacade],
+  providers: [EmployeeFacade, SectorFacade, RoleFacade],
 })
 export class EmployeeFormComponent implements OnInit {
   employeeForm: FormGroup;
@@ -42,7 +40,6 @@ export class EmployeeFormComponent implements OnInit {
   constructor(
     public employeeFacade: EmployeeFacade,
     private fb: FormBuilder,
-    public officeFacade: OfficeFacade,
     public sectorFacade: SectorFacade,
     public roleFacade: RoleFacade,
     
@@ -51,17 +48,10 @@ export class EmployeeFormComponent implements OnInit {
   ) {
     this.update = this.data.update;
     this.employeeForm = this.fb.group({
-      name: ['', Validators.required],
-      phone: ['', Validators.required],
-      email:['', Validators.required],
-      sector: ['', Validators.required],
-      role: ['', Validators.required],
-      performanceIndicators: this.fb.array([
-        this.fb.group({
-          name: ['', Validators.required],
-          unitOfMeasure: ['', Validators.required],
-        }),
-      ]),
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      mobile: ['', Validators.required],
+      email_address:['', Validators.required],
     });
   }
 
@@ -75,27 +65,6 @@ export class EmployeeFormComponent implements OnInit {
     }
   }
 
-  get performanceIndicators() {
-    return this.employeeForm.controls['performanceIndicators'] as FormArray;
-  }
-
-  addPerformanceIndicator() {
-    const performanceIndicatorForm = this.fb.group({
-      name: ['', Validators.required],
-      unitOfMeasure: ['', Validators.required],
-    });
-    this.performanceIndicators.push(performanceIndicatorForm);
-  }
-
-  deletePerformanceIndicator(indicatorIndex: number) {
-    if (this.performanceIndicators.length > 1) {
-      this.performanceIndicators.removeAt(indicatorIndex);
-    }
-  }
-
-  onGoalSelectionChange(event: MatSelectChange) {
-    this.sectorFacade.getSectorById(event.value);
-  }
 
   save() {
     const { valid, touched, dirty } = this.employeeForm;
@@ -112,23 +81,5 @@ export class EmployeeFormComponent implements OnInit {
         });
       }
     }
-  }
-
-  officeComparator(office1: Office, office2: Office) {
-    return (
-      office1?.id === office2?.id &&
-      office1?.name === office2?.name &&
-      office1?.location == office2?.location
-    );
-  }
-
-  sectorComparator(sector1: Sector, sector2: Sector) {
-    return (
-      sector1?.id === sector2?.id && sector1?.name === sector2?.name
-    );
-  }
-
-  roleComparator(role1: Role, role2: Role) {
-    return role1?.id === role2?.id && role1?.name === role2?.name;
   }
 }

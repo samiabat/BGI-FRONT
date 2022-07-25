@@ -7,7 +7,15 @@
         Please enter name
       </mat-error>
     </mat-form-field>
+
     <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <input id="description" formControlName="description" matInput placeholder=""/>
+      <mat-error *ngIf="sectorForm.get('description')?.hasError('required')">
+        Please enter description
+      </mat-error>
+    </mat-form-field>
+    <!-- <mat-form-field appearance="outline">
       <mat-label>Select Role</mat-label>
       <mat-select
         formControlName="role"
@@ -20,7 +28,7 @@
           {{ role.name }} 
         </mat-option>
       </mat-select>
-    </mat-form-field>
+    </mat-form-field> -->
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

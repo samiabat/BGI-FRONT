@@ -18,7 +18,7 @@ import { RoleFormComponent } from '../role-form/role-form.component';
     providers: [RoleFacade],
 })
 export class RoleListComponent implements AfterViewInit {
-  d_Colums: string[] = ['id', 'name', 'deleted', 'createdBy', 'updatedBy', 'deletedBy'];
+  d_Colums: string[] = ['id', 'name', 'active', 'createdBy', 'updatedBy', 'deletedBy'];
   dSource!: MatTableDataSource<Role>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

@@ -2,126 +2,35 @@
   <form class="activity-form" [formGroup]="employeeForm">
     <mat-form-field appearance="outline">
       <mat-label>Full Name</mat-label>
-      <input id="name" formControlName="name" placeholder="name" matInput />
-      <mat-error *ngIf="employeeForm.get('name')?.hasError('required')">
-        Please enter name
+      <input id="username" formControlName="username" placeholder="username" matInput />
+      <mat-error *ngIf="employeeForm.get('username')?.hasError('required')">
+        Please enter username
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Phone</mat-label>
-      <input id="phone" formControlName="phone" placeholder="phone" matInput />
-      <mat-error *ngIf="employeeForm.get('phone')?.hasError('required')">
-        Please enter phone
+      <mat-label>Password</mat-label>
+      <input type="password" id="password" formControlName="password" placeholder="password" matInput />
+      <mat-error *ngIf="employeeForm.get('password')?.hasError('required')">
+        Please enter password
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Mobile</mat-label>
+      <input id="mobile" formControlName="mobile" placeholder="mobile" matInput />
+      <mat-error *ngIf="employeeForm.get('mobile')?.hasError('required')">
+        Please enter mobile
       </mat-error>
     </mat-form-field>
     
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input id="phone" formControlName="email" placeholder="email" matInput />
-      <mat-error *ngIf="employeeForm.get('email')?.hasError('required')">
+      <input id="emial" formControlName="email_address" placeholder="Email" matInput />
+      <mat-error *ngIf="employeeForm.get('email_address')?.hasError('required')">
         Please enter email
       </mat-error>
     </mat-form-field>
-    
-    <mat-form-field appearance="outline">
-      <mat-label>Sector</mat-label>
-      <mat-select
-        formControlName="sector"
-        [compareWith]="sectorComparator"
-        (selectionChange)="onGoalSelectionChange($event)"
-      >
-        <mat-option
-          *ngFor="let sector of sectorFacade.sectors$ | async"
-          [value]="sector"
-        >
-          {{ sector.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    
-    <mat-card class="performance-indicator">
-      <mat-card-header>
-        <mat-card-subtitle>Assets</mat-card-subtitle>
-      </mat-card-header>
-      <div
-        formArrayName="performanceIndicators"
-        *ngFor="
-          let performanceIndicatorForm of performanceIndicators.controls;
-          let i = index
-        "
-        class="grouping"
-      >
-        <div class="performance-indicator-form" [formGroupName]="i">
-          <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input id="name" matInput formControlName="name" />
-          </mat-form-field>
-          <div class="btns">
-            <mat-icon
-              class="add-btn"
-              color="accent"
-              (click)="deletePerformanceIndicator(i)"
-            >
-              remove_circle</mat-icon
-            >
-            <mat-icon
-              class="add-btn"
-              color="primary"
-              (click)="addPerformanceIndicator()"
-            >
-              add_circle</mat-icon
-            >
-          </div>
-        </div>
-      </div>
-    </mat-card>
-
-    <mat-card class="performance-indicator">
-      <div
-        formArrayName="performanceIndicators"
-        *ngFor="
-          let performanceIndicatorForm of performanceIndicators.controls;
-          let i = index
-        "
-        class="grouping"
-      >
-        <div class="employees-form" [formGroupName]="i">
-          <mat-form-field appearance="outline">
-            <mat-label>Role</mat-label>
-            <mat-select
-              formControlName="role"
-              [compareWith]="roleComparator"
-            >
-              <mat-option
-                *ngFor="let role of roleFacade.roles$ | async"
-                [value]="role.id"
-                >
-                {{ role.name }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <div class="btns">
-            <mat-icon
-              class="add-btn"
-              color="accent"
-              (click)="deletePerformanceIndicator(i)"
-            >
-              remove_circle</mat-icon
-            >
-            <mat-icon
-              class="add-btn"
-              color="primary"
-              (click)="addPerformanceIndicator()"
-            >
-              add_circle</mat-icon
-            >
-          </div>
-        </div>
-      </div>
-    </mat-card>
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">

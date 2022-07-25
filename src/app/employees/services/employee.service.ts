@@ -27,7 +27,7 @@ export class EmployeeService {
   }
 
   getEmployee(id: number): Observable<Employee> {
-    const url = `${this.url}/${id}`
+    const url = `${this.url}${id}/`
     return this.http.get<Employee>(url).pipe(
       tap((_) => console.log(`fetched employee id=${id}`)),
       catchError(
@@ -48,7 +48,7 @@ export class EmployeeService {
   }
 
   updateEmployee(id: number, employee: Employee): Observable<void> {
-    const url = `${this.url}/${id}`
+    const url = `${this.url}${id}/`
     return this.http.put<void>(url, employee, this.httpOptions).pipe(
       tap((_) => console.log(`updated employee with id=${id}`)),
       catchError(BGIEIErrorHandler.handleError<void>('updateEmployee')),
@@ -56,7 +56,7 @@ export class EmployeeService {
   }
 
   deleteEmployee(id: number): Observable<void> {
-    const url = `${this.url}/${id}`
+    const url = `${this.url}${id}/`
 
     return this.http.delete<void>(url, this.httpOptions).pipe(
       tap((_) => console.log(`deleted employee with id=${id}`)),

@@ -8,7 +8,6 @@ import { AngularSlickgridModule } from 'angular-slickgrid';
 import { ConfirmDeleteModule } from '../confirm-delete/confirm-delete.module';
 import { SharedModules } from '../shared-modules.module';
 import { SectorsRoutingModule } from './sectors-routing.module';
-import { OfficesModule } from '../offices/offices.module';
 import { RolesModule } from '../roles/roles.module';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { RolesModule } from '../roles/roles.module';
     SharedModules,
     NgxsModule.forFeature([SectorState]),
     AngularSlickgridModule,
-    OfficesModule,
     RolesModule,
     ConfirmDeleteModule,
   ],
