@@ -1,7 +1,7 @@
+import { EMPLOYEES_ROUTE } from './../../constants/routes';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DASHBOARD_ROUTE } from 'src/app/constants/routes';
 import { AuthenticationFacade } from '../facade/authentication.facade';
 
 @Component({
@@ -29,7 +29,7 @@ export class ComponentComponent implements OnInit {
     this.authenticationFacade.isAuthenticated$.subscribe(
       (isAuthenticated: boolean) => {
         if (isAuthenticated) {
-          this.router.navigate([DASHBOARD_ROUTE]);
+          this.router.navigate([EMPLOYEES_ROUTE]);
         }
       }
     );

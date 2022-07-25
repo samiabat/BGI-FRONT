@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
-import { AngularSlickgridModule } from 'angular-slickgrid';
 import { ConfirmDeleteModule } from '../confirm-delete/confirm-delete.module';
 import { SharedModules } from '../shared-modules.module';
 import { RoleFormComponent } from './components/role-form/role-form.component';
@@ -13,8 +12,7 @@ import { RoleState } from './store/role.state';
   declarations: [RoleListComponent, RoleFormComponent],
   imports: [RolesRoutingModule,
     NgxsModule.forFeature([RoleState]),
-    AngularSlickgridModule,
     SharedModules,
     ConfirmDeleteModule],
 })
-export class RolesModule { }
+export class RolesModule {}

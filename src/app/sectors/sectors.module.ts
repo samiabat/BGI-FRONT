@@ -4,7 +4,6 @@ import { SectorListComponent } from './components/sector-list/sector-list.compon
 import { NgModule } from '@angular/core';
 
 import { NgxsModule } from '@ngxs/store';
-import { AngularSlickgridModule } from 'angular-slickgrid';
 import { ConfirmDeleteModule } from '../confirm-delete/confirm-delete.module';
 import { SharedModules } from '../shared-modules.module';
 import { SectorsRoutingModule } from './sectors-routing.module';
@@ -16,7 +15,6 @@ import { RolesModule } from '../roles/roles.module';
     SectorsRoutingModule,
     SharedModules,
     NgxsModule.forFeature([SectorState]),
-    AngularSlickgridModule,
     RolesModule,
     ConfirmDeleteModule,
   ],
