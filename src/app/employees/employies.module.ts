@@ -1,3 +1,4 @@
+import { DetailComponent } from './components/detail/detail.component';
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 
@@ -6,20 +7,18 @@ import { EmployeeFormComponent } from './components/employeeform/employee-form.c
 import { EmployeeListComponent } from './components/emplyee-list/employee-list.component'
 import { SharedModules } from '../shared-modules.module'
 import { NgxsModule } from '@ngxs/store'
-import { AngularSlickgridModule } from 'angular-slickgrid'
 import { ConfirmDeleteModule } from '../confirm-delete/confirm-delete.module'
 import { RolesModule } from '../roles/roles.module'
 import { SectorsModule } from '../sectors/sectors.module'
 import { EmployeeState } from './store/employee.state'
 
 @NgModule({
-  declarations: [EmployeeFormComponent, EmployeeListComponent],
+  declarations: [EmployeeFormComponent, EmployeeListComponent, DetailComponent],
   imports: [
     CommonModule,
     EmployiesRoutingModule,
     SharedModules,
     NgxsModule.forFeature([EmployeeState]),
-    AngularSlickgridModule,
     ConfirmDeleteModule,
     SectorsModule,
     RolesModule,

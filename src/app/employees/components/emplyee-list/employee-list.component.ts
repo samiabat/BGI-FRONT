@@ -1,4 +1,3 @@
-import { EmployeeService } from './../../services/employee.service';
 import { ConfirmDeleteDialogComponent } from '../../../confirm-delete/confirm-delete-dialog/confirm-delete-dialog.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,7 +6,7 @@ import { EmployeeFormComponent } from '../employeeform/employee-form.component';
 import { EmployeeFacade } from '../../facades/employee.facade';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { DetailComponent } from '../detail/detail.component';
 
 @Component({
   selector: 'app-employee-list',
@@ -16,11 +15,10 @@ import { MatSort } from '@angular/material/sort';
   providers: [EmployeeFacade],
 })
 export class EmployeeListComponent implements OnInit {
-  d_Colums: string[] = ['id', 'name', 'phone', 'email', 'active', 'updated_date', 'deletedBy', 'created_date', 'det','del', 'edit'];
+  d_Colums: string[] = ['id', 'name', 'phone', 'email', 'active', 'updated_date', 'deletedBy', 'created_date', 'det'];
   dSource!: MatTableDataSource<Employee>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private employeeFacade: EmployeeFacade,
     private matDialog: MatDialog) {
@@ -28,7 +26,6 @@ export class EmployeeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getEmployee();
-    // this.employeeFacade.employies$.subscribe((data) => (this.dataset = data));
   }
 
   getEmployee(){
@@ -36,7 +33,6 @@ export class EmployeeListComponent implements OnInit {
       this.dSource = new MatTableDataSource(data);
       this.dSource = new MatTableDataSource(data);
       this.dSource.paginator = this.paginator;
-      this.dSource.sort = this.sort;
     })
   }
   addEmployee() {
@@ -50,6 +46,13 @@ export class EmployeeListComponent implements OnInit {
     this.employeeFacade.selectEmployee(employee);
     this.matDialog.open(EmployeeFormComponent, {
       data: { update: true },
+    });
+  }
+
+  viewEmployee(employee: Employee){
+    this.employeeFacade.selectEmployee(employee);
+    const dialogRef = this.matDialog.open(DetailComponent,{
+      data: {data: employee}
     });
   }
 

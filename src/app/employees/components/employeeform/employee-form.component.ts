@@ -1,19 +1,12 @@
 import { SectorFacade } from './../../../sectors/facades/sector.facade';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSelectChange } from '@angular/material/select';
 import { RoleFacade } from 'src/app/roles/facades/role.facade';
-import { Role } from 'src/app/roles/models/role.model';
 import { Sector } from 'src/app/sectors/models/sector.model';
-import { UnitOfMeasure } from '../../models/performance-indicator.model';
 import { Employee } from '../../models/employee.model';
 import { EmployeeFacade } from '../../facades/employee.facade';
 
-interface Choise {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-employee-form',
@@ -28,15 +21,6 @@ export class EmployeeFormComponent implements OnInit {
   update: boolean = false;
   sectors: Sector[] = [];
 
-  selectedOffice: any;
-
-  unitOfMeasures: string[] = [];
-
-  choises: Choise[] = [
-    {value: 'admin', viewValue: 'Admin'},
-    {value: 'user', viewValue: 'Not Admin'},
-  ];
-
   constructor(
     public employeeFacade: EmployeeFacade,
     private fb: FormBuilder,
@@ -49,14 +33,22 @@ export class EmployeeFormComponent implements OnInit {
     this.update = this.data.update;
     this.employeeForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
       mobile: ['', Validators.required],
       email_address:['', Validators.required],
+      full_name: '',
+      title: '',
+      description: '',
+      sam_account: '',
+      company: '',
+      country: '',
+      department: '',
+      telephone_number: '',
+      street_address: '',
+      login: '',
     });
   }
 
   ngOnInit(): void {
-    this.unitOfMeasures.push(...Object.values(UnitOfMeasure));
     if (this.update) {
       this.employeeFacade.selectedEmployee$.subscribe((data) => {
         this.employeeToUpdate = data;
@@ -67,6 +59,7 @@ export class EmployeeFormComponent implements OnInit {
 
 
   save() {
+    console.log(this.employeeForm);
     const { valid, touched, dirty } = this.employeeForm;
     if (valid && (touched || dirty)) {
       if (!this.update) {

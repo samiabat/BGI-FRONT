@@ -1,0 +1,63 @@
+
+<mat-dialog-content>
+  <h4>
+    Username: _____________ {{employeeData?.username}}
+  </h4>
+  <h4>
+    Phone: _____________{{employeeData?.mobile}}
+  </h4>
+  <h4>
+    Email: _____________{{employeeData?.email_address}}
+  </h4>
+  <h4>
+    Title: ____________{{employeeData?.title}}
+  </h4>
+  <h4>
+    Street Address:__________{{employeeData?.street_address}}
+  </h4>
+  <h4>
+    Active: _____________ {{employeeData?.active}}
+  </h4>
+  <h4>
+    Company: _____________{{employeeData?.company}}
+  </h4>
+  <h4>
+    Country: _____________ {{employeeData?.country}}
+  </h4>
+  <h4>
+    Created By: ____________ {{employeeData?.created_by}}
+  </h4>
+
+  <h4>
+    Updated by: _____________{{employeeData?.updated_by}}
+  </h4>
+
+  <h4>
+    Created date: ____________{{employeeData?.created_date}}
+  </h4>
+  <h4>
+    Updated date: ____________ {{employeeData?.updated_date}}
+  </h4>
+  <h4>
+    Deleted By: ______________{{employeeData?.deleted_by}}
+  </h4>
+  <h4>
+    Login: ____________________{{employeeData?.login}}
+  </h4>
+
+  <h4>
+    Full Name: ________________{{employeeData?.full_name}}
+  </h4>
+
+  <h4>
+    Department: ______________{{employeeData?.department}}
+  </h4>
+  <h4>
+    Sam-Account: _____________ {{employeeData?.sam_account}}
+  </h4>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button class="submit" mat-flat-button color="accent" [mat-dialog-close]>
+      Close
+    </button>
+  </mat-dialog-actions>

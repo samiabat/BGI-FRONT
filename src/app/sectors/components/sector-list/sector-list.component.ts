@@ -1,7 +1,5 @@
-import { RoleService } from './../../../roles/services/role.service';
-import { SectorService } from './../../services/sector.service';
 import { RoleFacade } from 'src/app/roles/facades/role.facade';
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 // import { Column, GridOption, Formatters, OnEventArgs } from 'angular-slickgrid';
 import { ConfirmDeleteDialogComponent } from 'src/app/confirm-delete/confirm-delete-dialog/confirm-delete-dialog.component';
@@ -21,29 +19,25 @@ import { BehaviorSubject, Observable, switchMap } from 'rxjs';
   providers: [SectorFacade, RoleFacade],
 })
 export class SectorListComponent implements AfterViewInit {
-  d_Colums: string[] = ['id', 'name', 'role', 'active', 'createdBy', 'updated_date', 'deletedBy', 'created_date', 'det','del', 'edit'];
+  d_Colums: string[] = ['id', 'name', 'role', 'active', 'createdBy', 'updated_date', 'deletedBy', 'created_date', 'det'];
   dSource!: MatTableDataSource<Sector>;
   role!: Role;
-  refreshed$ = true;
-  refreshSector$ = new BehaviorSubject<boolean>(true);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private sectorFacade: SectorFacade, private sectorService: SectorService,
-    private matDialog: MatDialog, private roleService: RoleService,
-    private changeDetectorRefs: ChangeDetectorRef,) {
+  constructor(private sectorFacade: SectorFacade,
+    private matDialog: MatDialog) {
   }
 
   ngAfterViewInit() {
     this.refresh();
   }
 
-  public refresh(refresh: boolean = false) {
-    this.sectorService.getSectors().subscribe((data) => {
-      this.dSource = new MatTableDataSource(data);
+  public refresh() {
+    this.sectorFacade.sectors$.subscribe(res=>{
+      this.dSource = new MatTableDataSource(res);
       this.dSource.paginator = this.paginator;
-      this.changeDetectorRefs.detectChanges();
     })
   }
 
@@ -54,7 +48,7 @@ export class SectorListComponent implements AfterViewInit {
     this.matDialog.open(SectorFormComponent, {
       data: { update: true },
     }).afterClosed().subscribe( responce => { 
-      this.refresh(true) });
+      this.refresh() });
   }
 
   deleteStat(stat: Sector) {
@@ -63,22 +57,16 @@ export class SectorListComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result && stat.id) {
         this.sectorFacade.deleteSector(stat.id);
-        this.refresh(true);
+        this.refresh();
       }
     });
-  }
-
-  getRoleById(id: any) {
-    this.roleService.getRole(id).subscribe((data) => {
-      return data.name;
-    })
   }
 
   addSector() {
     this.matDialog.open(SectorFormComponent, {
       data: { update: false },
     }).afterClosed().subscribe( responce => { 
-      this.refresh(true) });
+      this.refresh() });
   }
 
   editSector(sector: Sector) {
@@ -86,7 +74,7 @@ export class SectorListComponent implements AfterViewInit {
     this.matDialog.open(SectorFormComponent, {
       data: { update: true },
     }).afterClosed().subscribe( _ => { 
-      this.refresh(true);
+      this.refresh();
     });
   }
 
@@ -96,7 +84,7 @@ export class SectorListComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result && sector.id) {
         this.sectorFacade.deleteSector(sector.id);
-        this.refresh(true);
+        this.refresh();
       }
     });
   }
