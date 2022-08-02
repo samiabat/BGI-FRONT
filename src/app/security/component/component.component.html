@@ -1,27 +1,20 @@
 <form class="login-form" [formGroup]="loginForm">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Please Login</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="login-fields">
-      <mat-form-field appearance="outline">
-        <mat-label>User Name</mat-label>
-        <input id="userName" formControlName="userName" matInput />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-        <input
-          id="password"
-          type="password"
-          formControlName="password"
-          matInput
-        />
-      </mat-form-field>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button class="submit" mat-flat-button color="accent" (click)="login()">
+    <mat-card>
+        <mat-card-content align="center" class="login-fields">
+            <img style="float:left" src="https://media-exp1.licdn.com/dms/image/C4D0BAQGh0J_UCQ3HlQ/company-logo_400_400/0/1519905346970?e=1661990400&v=beta&t=S-BJAGcpKhJ0mtmri581GktTIKTYQdDpF4ydBNjH0OI">
+            <mat-form-field appearance="outline">
+                <mat-label>Username</mat-label>
+                <input id="username" formControlName="username" matInput />
+            </mat-form-field><br>
+            <mat-form-field appearance="outline">
+                <mat-label>Password</mat-label>
+                <input id="password" type="password" formControlName="password" matInput />
+            </mat-form-field>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button class="submit" mat-flat-button color="primary" (click)="login()">
         Login
       </button>
-    </mat-card-actions>
-  </mat-card>
+        </mat-card-actions>
+    </mat-card>
 </form>

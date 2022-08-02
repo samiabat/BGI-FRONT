@@ -1,11 +1,14 @@
-import { ComponentComponent } from './security/component/component.component';
-import { EMPLOYEES_ROUTE, LOGIN_ROUTE, ROLES_ROUTE, SECTORS_ROUTE } from './constants/routes';
+import { EMPLOYEES_ROUTE, LOGIN_ROUTE, LOGOUT_ROUTE, ROLES_ROUTE, SECTORS_ROUTE } from './constants/routes';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 
 const routes: Routes = [
-  // { path: '', redirectTo: LOGIN_ROUTE, pathMatch: 'full' },
+  { path: '', redirectTo: LOGIN_ROUTE, pathMatch: 'full' },
+  { path: LOGOUT_ROUTE,  
+    loadChildren: () =>
+    import('./security/security.module').then((o) => o.SecurityModule),
+  },
   { path: LOGIN_ROUTE,  
     loadChildren: () =>
     import('./security/security.module').then((o) => o.SecurityModule),

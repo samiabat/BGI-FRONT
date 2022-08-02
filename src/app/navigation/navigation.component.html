@@ -1,43 +1,33 @@
 <mat-toolbar class="mat-toolbar" color="warn">
-  <div>
-    <button
-      mat-icon-button
-      *ngIf="sidenav.mode === 'over'"
-      (click)="sidenav.toggle()"
-    >
-      <mat-icon *ngIf="!sidenav.opened"> menu </mat-icon>
-      <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
-    </button>
-    BGI EMPLOYEE INFO (BEI)
-  </div>
-  <div>
-    <button mat-button>
+    <div>
+        BGI EMPLOYEE INFO (BEI)
+    </div>
+    <div><img src="https://bgiethiopia.com/assets/logo-red.png" alt="LOGO"></div>
+
+    <div>
+        <button mat-button>
       <mat-icon>{{ notificationsRoute.icon }}</mat-icon>
+    </button >
+        <button  *ngIf="authenticationService.logedIn" mat-button (click)="logout()">
+      <mat-icon>{{ logoutRoute.icon }}</mat-icon>
     </button>
-    <button mat-button>
-      <mat-icon>{{ manageAccountsRoute.icon }}</mat-icon>
-    </button>
-  </div>
+    </div>
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav #sidenav="matSidenav" class="sidenav" color="primary">
-    <div *ngFor="let link of mainNavLinks">
-      <a
-        class="menu-button"
-        mat-button
-        [routerLink]="link.link"
-        [routerLinkActive]="link.link"
-      >
-        <mat-icon color="warn">{{ link.icon }}</mat-icon>
-        <span>{{ link.label }}</span>
-      </a>
-      <mat-divider></mat-divider>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="content mat-elevation-z1">
-      <router-outlet></router-outlet>
-    </div>
-  </mat-sidenav-content>
+    <mat-sidenav #sidenav="matSidenav" class="sidenav" color="primary">
+        <img id="yellow" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS8zIiPuJCOH19cyti4QvOHruHvKY69mq4tg&usqp=CAU" alt="" srcset="">
+        <div *ngFor="let link of mainNavLinks">
+            <a class="menu-button" mat-button [routerLink]="link.link" [routerLinkActive]="link.link">
+                <mat-icon color="warn">{{ link.icon }}</mat-icon>
+                <span>{{ link.label }}</span>
+            </a>
+            <mat-divider></mat-divider>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="content mat-elevation-z1">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
 </mat-sidenav-container>

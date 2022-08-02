@@ -1,1 +1,2 @@
-<app-navigation></app-navigation>
+<app-component *ngIf="!isAuthenticated$"></app-component>
+<app-navigation *ngIf="isAuthenticated$"></app-navigation>

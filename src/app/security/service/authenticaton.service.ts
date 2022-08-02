@@ -21,21 +21,23 @@ export class AuthenticationService {
     return this.http.post<LoginResponse>(LOGIN_URL, request).pipe(
       tap((response: LoginResponse) => {
         console.log(
-          `Was login successful? ${response.success}, message: ${response.message}`
+          `Was login successful? ${response.access}, message: ${response.refresh}`
         );
-        if (!!response.token) {
-          localStorage.setItem(this.tokenKey, response.token);
+        if (!!response.access) {
+          localStorage.setItem(this.tokenKey, response.access);
         }
+
       }),
       catchError(BGIEIErrorHandler.handleError<LoginResponse>('login'))
     );
   }
 
   logedIn(){
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('access-token');
   }
   logout() {
-    return localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.tokenKey);
+    location.reload();
   }
 }
 

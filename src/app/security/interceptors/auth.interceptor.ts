@@ -23,6 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     var token = this.authenticationService.getToken();
+    console.log("intercept", token)
     if (token) {
       request = request.clone({
         setHeaders: {
@@ -31,7 +32,9 @@ export class AuthInterceptor implements HttpInterceptor {
       });
     }
     return next.handle(request).pipe(
+      
       catchError((error) => {
+        console.log("hello")
         // Perform logout on 401 – Unauthorized HTTP response errors
         if (error instanceof HttpErrorResponse && error.status === 401) {
           this.authenticationService.logout();

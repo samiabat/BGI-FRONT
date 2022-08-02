@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core'
 import { catchError, Observable, tap } from 'rxjs'
 import { EMPLOYEES_URL } from 'src/app/constants/urls'
 import { BGIEIErrorHandler } from 'src/app/error-handler/error.handler'
+import { AuthenticationService } from 'src/app/security/service/authenticaton.service'
 import { Employee } from '../models/employee.model'
 
 @Injectable({
@@ -10,15 +11,16 @@ import { Employee } from '../models/employee.model'
 })
 export class EmployeeService {
   url = EMPLOYEES_URL
-
+  token = this.authenticateService.getToken();
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({ 'Content-Type': 'application/json', Authorization: `Bearer ${this.token}`}),
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authenticateService: AuthenticationService) { }
 
   getEmployies(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(this.url).pipe(
+    const token = this.authenticateService.getToken();
+    return this.http.get<Employee[]>(this.url, {headers: {Authorization: `Bearer ${token}`,}}).pipe(
       tap((data) => {
         console.log('fetched employies')
       }),
@@ -27,8 +29,9 @@ export class EmployeeService {
   }
 
   getEmployee(id: number): Observable<Employee> {
+    const token = this.authenticateService.getToken();
     const url = `${this.url}${id}/`
-    return this.http.get<Employee>(url).pipe(
+    return this.http.get<Employee>(url, {headers: {Authorization: `Bearer ${token}`,}}).pipe(
       tap((_) => console.log(`fetched employee id=${id}`)),
       catchError(
         BGIEIErrorHandler.handleError<Employee>(`getEmployee id=${id}`),
@@ -37,7 +40,6 @@ export class EmployeeService {
   }
 
   addEmployee(employee: Employee): Observable<Employee> {
-
     return this.http.post<Employee>(this.url, employee, this.httpOptions).pipe(
 
       tap((newEmployee: Employee) =>

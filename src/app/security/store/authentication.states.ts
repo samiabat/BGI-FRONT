@@ -35,7 +35,7 @@ export class AuthenticationState {
         var token = this.authenticationService.getToken();
         patchState({
           loginResponse: loginResponse,
-          isAuthenticated: !!token && loginResponse.success,
+          isAuthenticated: !!token && loginResponse.access!=null,
         });
       })
     );

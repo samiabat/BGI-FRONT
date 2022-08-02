@@ -7,6 +7,11 @@ import { EmployeeFacade } from '../../facades/employee.facade';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DetailComponent } from '../detail/detail.component';
+import { AuthenticationFacade } from 'src/app/security/facade/authentication.facade';
+import { Router } from '@angular/router';
+import { LOGIN_ROUTE } from 'src/app/constants/routes';
+import { AuthenticationService } from 'src/app/security/service/authenticaton.service';
+import { EmployeeService } from '../../services/employee.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -17,19 +22,30 @@ import { DetailComponent } from '../detail/detail.component';
 export class EmployeeListComponent implements OnInit {
   d_Colums: string[] = ['id', 'name', 'phone', 'email', 'active', 'updated_date', 'deletedBy', 'created_date', 'det'];
   dSource!: MatTableDataSource<Employee>;
+  flag = true;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private employeeFacade: EmployeeFacade,
-    private matDialog: MatDialog) {
+  constructor(
+    private employeeFacade: EmployeeFacade,
+    private employeeService: EmployeeService,
+    private matDialog: MatDialog, 
+    public authenticationFacade: AuthenticationFacade, 
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    ) {
   }
 
   ngOnInit(): void {
+    console.log(this.authenticationService.logedIn())
+    if (!this.authenticationService.logedIn()){
+      this.router.navigate([LOGIN_ROUTE]);
+    }
     this.getEmployee();
   }
 
   getEmployee(){
-    this.employeeFacade.employies$.subscribe((data)=>{
+    this.employeeService.getEmployies().subscribe((data)=>{
       this.dSource = new MatTableDataSource(data);
       this.dSource = new MatTableDataSource(data);
       this.dSource.paginator = this.paginator;
@@ -38,7 +54,7 @@ export class EmployeeListComponent implements OnInit {
   addEmployee() {
     this.matDialog.open(EmployeeFormComponent, {
       data: { update: false },
-    });
+    }).afterClosed().subscribe(()=>{this.getEmployee()});
   }
 
   editEmployee(employee: Employee) {
@@ -46,12 +62,12 @@ export class EmployeeListComponent implements OnInit {
     this.employeeFacade.selectEmployee(employee);
     this.matDialog.open(EmployeeFormComponent, {
       data: { update: true },
-    });
+    }).afterClosed().subscribe(()=>{this.getEmployee()});
   }
 
   viewEmployee(employee: Employee){
     this.employeeFacade.selectEmployee(employee);
-    const dialogRef = this.matDialog.open(DetailComponent,{
+    this.matDialog.open(DetailComponent,{
       data: {data: employee}
     });
   }
@@ -62,6 +78,7 @@ export class EmployeeListComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: boolean) => {
       if (result && employee.id) {
         this.employeeFacade.deleteEmployee(employee.id);
+
       }
     });
   }
