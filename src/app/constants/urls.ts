@@ -1,4 +1,4 @@
-export const API_BASE_URL = 'http://localhost:8000';
+export const API_BASE_URL = 'https://accountmanager.onrender.com';
 
 // URLs
 export const ROLES_URL = `${API_BASE_URL}/roles/`;
