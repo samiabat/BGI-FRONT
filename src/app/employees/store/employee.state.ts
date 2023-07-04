@@ -38,7 +38,7 @@ export class EmployeeState implements NgxsAfterBootstrap {
   getEmployies({ patchState, setState }: StateContext<EmployeeStateModel>) {
     patchState({ loading: true })
     return this.employeeService.getEmployies().pipe(
-      tap((employies) =>
+      tap((employies: any) =>
         setState({
           employies: employies,
           selectedEmployee: null,
@@ -54,7 +54,7 @@ export class EmployeeState implements NgxsAfterBootstrap {
     { employee }: CreateEmployee,
   ) {
     return this.employeeService.addEmployee(employee).pipe(
-      tap((newEmployee) => {
+      tap((newEmployee: Employee) => {
         const state = getState()
         patchState({
           employies: [...state.employies, newEmployee],
@@ -69,8 +69,8 @@ export class EmployeeState implements NgxsAfterBootstrap {
     { id, employee }: UpdateEmployee,
   ) {
     return this.employeeService.updateEmployee(id, employee).pipe(
-      switchMap((_) => this.employeeService.getEmployee(id)),
-      tap((updatedEmployee) => {
+      switchMap((_: any) => this.employeeService.getEmployee(id)),
+      tap((updatedEmployee: Employee) => {
         const state = getState()
         const employeeList = [...state.employies]
         const employeeIndex = employeeList.findIndex(
@@ -100,7 +100,7 @@ export class EmployeeState implements NgxsAfterBootstrap {
     { id }: DeleteEmployee,
   ) {
     return this.employeeService.deleteEmployee(id).pipe(
-      tap((_) => {
+      tap((_: any) => {
         const state = getState()
         const filteredArray = state.employies.filter((item) => item.id !== id)
         setState({
