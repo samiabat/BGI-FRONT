@@ -26,7 +26,6 @@ export class AuthenticationService {
         if (!!response.access) {
           localStorage.setItem(this.tokenKey, response.access);
         }
-
       }),
       catchError(BGIEIErrorHandler.handleError<LoginResponse>('login'))
     );

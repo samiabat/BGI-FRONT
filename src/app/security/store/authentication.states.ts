@@ -21,9 +21,10 @@ const AUTHENTICATION_STATE_TOKEN = new StateToken<AuthenticationStateModel>(
     isAuthenticated: false,
   },
 })
+
 @Injectable()
 export class AuthenticationState {
-  constructor(private authenticationService: AuthenticationService) {}
+  constructor(private authenticationService: AuthenticationService) { }
 
   @Action(Login)
   login(
@@ -31,11 +32,11 @@ export class AuthenticationState {
     { loginRequest }: Login
   ) {
     return this.authenticationService.login(loginRequest).pipe(
-      tap((loginResponse) => {
+      tap((loginResponse: any) => {
         var token = this.authenticationService.getToken();
         patchState({
           loginResponse: loginResponse,
-          isAuthenticated: !!token && loginResponse.access!=null,
+          isAuthenticated: !!token && loginResponse.access != null,
         });
       })
     );

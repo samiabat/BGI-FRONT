@@ -33,9 +33,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     return next.handle(request).pipe(
       
-      catchError((error) => {
-        console.log("hello")
-        // Perform logout on 401 – Unauthorized HTTP response errors
+      catchError((error: { status: number; message: string | undefined; }) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
           this.authenticationService.logout();
           this.router.navigate([LOGIN_ROUTE]);

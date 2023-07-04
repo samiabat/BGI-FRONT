@@ -4,7 +4,12 @@
 }
 
 img {
-    height: 250px;
+    height: 150px;
+    padding-top: 2%;
+}
+
+mat-card-content {
+    padding-top: 10%;
 }
 
 mat-card {
@@ -14,9 +19,13 @@ mat-card {
     max-height: 50rem;
     border-radius: 2rem;
 }
+button { 
+    margin-right: 13%;
+}
 
 form {
     padding-top: 10%;
-    background-image: url('https://previews.123rf.com/images/albertkarimov/albertkarimov1703/albertkarimov170300009/73267957-background-of-fabrics-and-textiles-in-bright-yellow-colour.jpg?fj=1');
-    height: 100%;
+    background-color: rgb(21, 126, 68);
+    //background-image: url('https://previews.123rf.com/images/albertkarimov/albertkarimov1703/albertkarimov170300009/73267957-background-of-fabrics-and-textiles-in-bright-yellow-colour.jpg?fj=1');
+    height: 70%;
 }
