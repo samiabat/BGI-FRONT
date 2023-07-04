@@ -1,11 +1,11 @@
 import { DASHBOARD_ROUTE, EMPLOYEES_ROUTE, LOGIN_ROUTE, LOGOUT_ROUTE, MANAGE_ACCOUNT_ROUTE, ROLES_ROUTE, SECTORS_ROUTE } from './constants/routes';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MANAGE_ACCOUNT_URL } from './constants/urls';
+// import { MANAGE_ACCOUNT_URL } from './constants/urls';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: LOGIN_ROUTE, pathMatch: 'full' },
+  // { path: '', redirectTo: LOGIN_ROUTE, pathMatch: 'full' },
   { path: LOGOUT_ROUTE,  
     loadChildren: () =>
     import('./security/security.module').then((o) => o.SecurityModule),
