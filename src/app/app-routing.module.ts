@@ -5,7 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 
 const routes: Routes = [
-  // { path: '', redirectTo: LOGIN_ROUTE, pathMatch: 'full' },
+  { path: '', redirectTo: LOGIN_ROUTE, pathMatch: 'full' },
   { path: LOGOUT_ROUTE,  
     loadChildren: () =>
     import('./security/security.module').then((o) => o.SecurityModule),
